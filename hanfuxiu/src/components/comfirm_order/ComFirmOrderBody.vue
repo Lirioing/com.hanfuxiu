@@ -1,14 +1,224 @@
 <template>
-<!--这里是确认订单的的主体部分-->
-  <h1>这里是确认订单的主体部分</h1>
+  <!--这里是确认订单的的主体部分-->
+  <div class="container">
+    <div class="checkout-box">
+      <div class="section">
+        <div class="section-header">收货地址</div>
+        <comfirm-order-address></comfirm-order-address>
+        <div class="col-md-3 section-body">
+          <div class="address-item">
+            <div class="newaddress">
+              <img src="../../assets/add.svg" alt="">
+            </div>
+            <p>添加新地址</p>
+          </div>
+        </div>
+      </div>
+      <div class="section" style="clear: both">
+        <div class="section-header">商品</div>
+        <div class="section-body" id="mygoods">
+          <!--定义一个时间,检测确认订单商品信息里的商品的数量和价格-->
+          <comfirm-order-goods v-on:childByValue="goods"></comfirm-order-goods>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header" style="clear: both">配送方式</div>
+        <div class="section-body flex">
+          包邮
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-header">发票抬头</div>
+        <div class="section-body flex">
+          <a href="">电子发票</a>
+          <a href="">个人</a>
+          <a href="">商品明细</a>
+          <a href="">修改 ></a>
+        </div>
+      </div>
+      <div class="moneybox">
+        <ul>
+          <li class="col-md-12">
+            <label class="col-md-6 mylabel">商品件数:</label>
+            <span class="col-md-6 moneyspan" id="goods_num">{{goods_num}}件</span>
+          </li>
+          <li class="col-md-12">
+            <label class="col-md-6 mylabel">商品总价:</label>
+            <span class="col-md-6 moneyspan totalprice">{{total_price}}元</span>
+          </li>
+          <li class="col-md-12">
+            <label class="col-md-6 mylabel">运费:</label>
+            <span class="col-md-6 moneyspan">0元</span>
+          </li>
+          <li class="col-md-12">
+            <label class="col-md-6 mylabel">应付总额:</label>
+            <span class="col-md-6 moneyspan totalprice">{{total_price}}元</span>
+          </li>
+        </ul>
+      </div>
+      <div class="subtotal">
+        <a href="#">去结算</a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
-name: "ComFirmOrderBody"
-}
+  //<!--导入确认订单里面地址组件,和确认订单里商品信息的组件-->
+  import ComFirmOrderGoods from './ComFirmOrderGoods'
+  import ComFirmOrderAddress from './ComFirmOrderAddress'
+  export default {
+    name: "ComFirmOrderBody",
+    data: function () {
+      return {
+        goods_num: "",
+        total_price:"" ,
+      }
+    },
+    components: {
+      'comfirm-order-goods': ComFirmOrderGoods,
+      'comfirm-order-address': ComFirmOrderAddress,
+    },
+    methods: {
+      childByValue: function (goods) {
+        // childValue就是子组件传过来的值
+        for (var good of goods) {
+          this.goods_num += good.quantity
+          this.total_price += good.price
+        }
+      }
+    },
+  }
 </script>
 
 <style scoped>
+  .checkout-box {
+    background: #fff;
+    text-align: left;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  .section-header {
+    padding-left: 30px;
+    font-size: 1.5em;
+    font-weight: lighter;
+  }
+
+  .section-body {
+    margin-top: 20px;
+    padding-left: 30px;
+  }
+
+  .address-item {
+    width: 268px;
+    height: 178px;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .address-item span {
+    display: block;
+    padding-left: 24px;
+  }
+
+  .address-item span:first-child {
+    margin-top: 30px;
+    font-size: 1.24em;
+    margin-bottom: 22px;
+  }
+
+  .address-item p {
+    text-align: center;
+    color: #e0e0e0;
+  }
+
+  .newaddress {
+    width: 100%;
+    height: 89px;
+    position: relative;
+  }
+
+  .newaddress > img {
+    position: absolute;
+    left: 118px;
+    top: 60px;
+  }
+
+  .td-2 a img {
+    height: 60px;
+    width: 60px;
+  }
+
+  .td-2, .td-3, .td-4, .td-5 {
+    line-height: 60px;
+  }
+
+  .goods {
+    clear: both;
+  }
+
+  .a-title {
+    color: #2C2C2C;
+  }
+
+  .flex {
+    color: #ffa448;
+    padding-left: 80px;
+  }
+
+  .flex a {
+    color: #ffa448;
+  }
+
+  .moneybox ul {
+    text-align: right;
+    width: 22%;
+    list-style: none;
+    padding-left: 0;
+    float: right;
+  }
+
+  .moneybox ul li:last-child {
+    margin-top: 16px;
+    line-height: 31px;
+  }
+
+  .moneybox ul li:last-child > span {
+    font-size: 1.7em;
+  }
+
+  .mylabel {
+    font-weight: lighter;
+  }
+
+  .moneyspan {
+    color: #ffa448;
+  }
+
+  .subtotal {
+    clear: both;
+    border-top: 2px solid #e0e0e0;
+    width: 100%;
+    height: 80px;
+  }
+
+  .subtotal a {
+    margin-top: 16px;
+    margin-right: 30px;
+    display: block;
+    width: 160px;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+    background: #ffa448;
+    color: #ffffff;
+    float: right;
+    border-radius: 10px;
+  }
 
 </style>

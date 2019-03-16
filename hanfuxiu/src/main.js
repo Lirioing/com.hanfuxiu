@@ -10,8 +10,20 @@ import NavSearch from './components/tools/NavSearch'
 import NavFooter from './components/tools/NavFooter'
 import router from './router'
 
+import axios from 'axios'
 
-Vue.config.productionTip = false
+//1. 导入vuex   npm install vuex --save
+import Vuex from 'vuex'
+import store from './vuex/store'
+
+//2. 全局使用VUEX
+Vue.use(Vuex);
+
+//3. 新建store
+Vue.config.productionTip = false;
+
+
+Vue.config.productionTip = false;
 
 //注册成为全局组件
 Vue.component('nav-header',NavHeader);
@@ -24,4 +36,4 @@ new Vue({
   router,
   components: { App },
   template: '<App/>'
-})
+});

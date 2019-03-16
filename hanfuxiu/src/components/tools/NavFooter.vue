@@ -1,4 +1,5 @@
 <template>
+  <!--页面的底部信息-->
   <div class="footer">
     <div class="row">
       <div class="col-xs-0 col-sm-12 col-md-12 ">

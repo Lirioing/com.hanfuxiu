@@ -1,5 +1,5 @@
 <template>
-  <!--这里填的是搜索的那个导航-->
+  <!--这里是带搜索框的那个导航条-->
   <nav class="navbar navbar-default navbar-second">
     <div class="container-fluid navbar-second-container my-nav-limit-len">
       <div class="navbar-header">

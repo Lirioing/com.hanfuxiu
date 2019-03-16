@@ -1,9 +1,8 @@
 <template>
   <!--这里是优选配饰-->
-  <div class="row interval-row" id="section-ornament-recommend">         <!--interval间隔-->
+  <div class="row interval-row" id="section-ornament-recommend">
     <p class="col-xs-12 col-sm-12 col-md-12 goods-recommend-p">优选配饰</p>
     <div class="col-xs-12 col-sm-6 col-md-3 goods-recommend" v-for="g in recommend_goods">
-      <!--recommend推荐-->
       <div class="goods-recommend-div">
         <img :src="g.src" alt="">
         <p class="goods-price"><i>￥</i><span>{{g.price}}</span></p>
@@ -20,6 +19,7 @@
     name: "IndexPush",
     data: function () {
       return {
+        //由于数据库的缺陷,没有做推荐商品表,所以自己在页面上手动写了一些数据
         recommend_goods: [
           {
             'src': 'https://pic.hanfugou.com/web/2019/1/17/12/a308d7d8ce0941f88f02430f7f7bf6bd.jpg_250x250.jpg/format/webp',

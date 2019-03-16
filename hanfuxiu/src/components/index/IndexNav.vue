@@ -3,10 +3,10 @@
   <div class="section-top-bgcolor">
     <div class="row section-top-row">
       <div class="section-top col-xs-12 col-sm-8 col-md-6 ">
-        <div><a href="index.html">首页</a></div>
-        <div><a href="shopping.html" target="_blank">汉衣库</a></div>
-        <div><a href="">我的关注</a></div>
-        <div><a href="">关于我们</a></div>
+        <div><router-link to="/" target="_blank">首页</router-link></div>
+        <div><router-link to="/search"  target="_blank">汉衣库</router-link></div>
+        <div><router-link to="/order" target="_blank">我的关注</router-link></div>
+        <div><a target="_blank">关于我们</a></div>
       </div>
     </div>
   </div>

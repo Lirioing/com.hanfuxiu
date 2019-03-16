@@ -87,7 +87,6 @@
         window.onfocus = function() { this.play() }.bind(this)
       },
       move(offset, direction, speed) {
-        console.log(speed)
         if (!this.transitionEnd) return
         this.transitionEnd = false
         direction === -1 ? this.currentIndex += offset/1100 : this.currentIndex -= offset/1100
