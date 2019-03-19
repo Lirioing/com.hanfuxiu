@@ -18,7 +18,7 @@
         <div class="section-header">商品</div>
         <div class="section-body" id="mygoods">
           <!--定义一个时间,检测确认订单商品信息里的商品的数量和价格-->
-          <comfirm-order-goods v-on:childByValue="goods"></comfirm-order-goods>
+          <comfirm-order-goods v-on:childByValue="childGoods"></comfirm-order-goods>
         </div>
       </div>
       <div class="section">
@@ -57,7 +57,7 @@
         </ul>
       </div>
       <div class="subtotal">
-        <a href="#">去结算</a>
+        <a href="#" @click="subtotal">去结算</a>
       </div>
     </div>
   </div>
@@ -67,12 +67,22 @@
   //<!--导入确认订单里面地址组件,和确认订单里商品信息的组件-->
   import ComFirmOrderGoods from './ComFirmOrderGoods'
   import ComFirmOrderAddress from './ComFirmOrderAddress'
+  import axios from 'axios'
   export default {
     name: "ComFirmOrderBody",
     data: function () {
       return {
-        goods_num: "",
-        total_price:"" ,
+        goods_num: 0,
+        total_price:0,
+        goods: [
+          {
+            main_img: "",
+            name: "",
+            goods_size: "",
+            quantity: "",
+            price: '',
+          }
+        ]
       }
     },
     components: {
@@ -80,12 +90,33 @@
       'comfirm-order-address': ComFirmOrderAddress,
     },
     methods: {
-      childByValue: function (goods) {
+      childGoods: function (data) {
         // childValue就是子组件传过来的值
-        for (var good of goods) {
-          this.goods_num += good.quantity
-          this.total_price += good.price
+        for (var good of data) {
+          this.goods=data;
+          this.goods_num +=typeof good.quantity=="number"?good.quantity:parseInt(good.quantity);
+          this.total_price += typeof good.price=="number"?good.price:parseInt(good.price);
         }
+      },
+      subtotal:function () {
+        var user_id =window.localStorage.getItem('user_id')
+        var goods={"user_id":user_id,"status":this.goods_size};
+        for(var i of this.goods){
+          goods[i.id ]=typeof i.quantity=="number"?i.quantity.toString():i.quantity;
+        }
+        // alert(goods)
+        console.log(goods)
+       axios.post(
+         'http://39.105.36.78:8080/api/order/myinsert/',goods,)
+         .then((response)=>{
+           console.log(response)
+         })
+         .catch(
+           function (error) {
+             console.log(error)
+           }
+         )
+
       }
     },
   }

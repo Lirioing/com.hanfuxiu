@@ -33,6 +33,7 @@
 <script>
   //导入axios
   import axios from 'axios'
+
   export default {
     name: "ComFirmOrderGoods",
     data: function () {
@@ -56,7 +57,7 @@
       //本页面的解决思路是,购物车跳转过来的,在url上传来商品id,类似http://localhost:8080/#/comfirmorder?2,3
       //商品详情页跳转过来的,不需要再url上携带数据,把本页面需要的数据存到sessionStorage中去
       //所以本页面应用一个判断条件,来解决这两条路线,indexOf,找到返回找到的下标,找不到返回-1
-      if (url.indexOf('?')!=-1) {
+      if (url.indexOf('?') != -1) {
         //发送axios,从购物车表中取的对应goods_id的商品,渲染到页面上
         var getInfo1 = url.slice(url.indexOf('?') + 1).split(',');
         //在info中添加一个user_id字段
@@ -72,6 +73,8 @@
             if (response.data) {
               // console.log(response.data);
               this.goods = response.data;
+              //想父组件发射一条数据,把商品的信息传递给父组件
+              this.$emit('childByValue', this.goods)
             } else {
               alert(response.data.status_text);
             }
@@ -83,10 +86,12 @@
       }
       else {
         //从sessionStorage中获取商品信息
-        this.goods=JSON.parse(window.sessionStorage.getItem("goods_info"))
+        this.goods = JSON.parse(window.sessionStorage.getItem("goods_info"))
+        //想父组件发射一条数据,把商品的信息传递给父组件
+        this.$emit('childByValue', this.goods)
       }
-      //想父组件发射一条数据,把商品的信息传递给父组件
-      this.$emit('childByValue', this.goods)
+
+
     },
   }
 </script>
