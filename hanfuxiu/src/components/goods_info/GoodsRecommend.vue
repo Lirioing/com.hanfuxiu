@@ -46,6 +46,11 @@
 <script>
 export default {
 name: "GoodsRecommend",
+  data() {
+    return {
+      textTip:this.goods
+    }
+  },
   props:['goods']
 }
 </script>

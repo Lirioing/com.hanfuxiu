@@ -1,7 +1,7 @@
 <template>
 <!--这里是商店的页面-->
   <div>
-    <nav-search></nav-search>
+    <!--<nav-search></nav-search>-->
     <shops-body></shops-body>
   </div>
 </template>
@@ -12,6 +12,9 @@ export default {
 name: "Shops",
   components:{
     'shops-body':ShopsBody
+  },
+  mounted:{
+
   }
 }
 </script>

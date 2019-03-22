@@ -20,7 +20,7 @@
                 <button  :[cls]="button==1?'list':'' " :ref="button==1?'btn':'' " @click="button=1">S</button>
               </div>
               <div class="col-xs-2 col-sm-2 col-md-1 button">
-                <button :[cls]="button==2?'list':'' " :ref="button==2?'btn':'' " @click="button=2">M</button>
+                <button :[cls]="button==0?'list':'' " :ref="button==0?'btn':'' " @click="button=0">M</button>
               </div>
               <div class="col-xs-2 col-sm-2 col-md-1 button">
                 <button :[cls]="button==3?'list':'' " :ref="button==3?'btn':'' " @click="button=3">L</button>
@@ -79,9 +79,9 @@
               粉丝数
             </div>
           </div>
-          <div class="collection" id="${res.id}">
-            <!--<span class="c_l"><a href="#" id="myshophref" target="_blank"><img :src=image/index.png>  进入店铺</a></span>-->
-            <!--<span class="c_l"><a class="myfavshop"><img :src=image/collect.png>  关注本店</a></span>-->
+          <div class="collection" :id=goods.id>
+            <span class="c_l"><router-link id="myshophref" :to="{path:'/shops'+'?'+goods.id}" >  进入店铺</router-link></span>
+            <span class="c_l"><a class="myfavshop" @click="collection">关注本店</a></span>
           </div>
           <div class="address">所在地：<i>安徽</i></div>
         </div>
@@ -177,28 +177,45 @@
       joincart:function () {
         // var quantity=document.querySelector('.input').value;
         var user_id=localStorage.getItem('user_id');
-        quantity:this.$refs.num.value,
+        // var user_id=1;
+        var quantity=this.$refs.num.value;
         alert(quantity);
         alert(user_id)
         // alert(goodsize)
         if(user_id){
-          var goodsize=document.querySelector('.list').innerText;
+          var goodsize=this.$refs.btn.innerText;
           alert(goodsize)
-          req={'user_id':user_id,'quantity':quantity,'goods_size':goodsize};
-          postData(ipconfig+'/cart/add/',req,function (res) {
-            alert(res.status_text);
-          })
+           var req={'user_id':user_id,'quantity':quantity,'goods_size':goodsize};
+          // postData(ipconfig+'/cart/add/',req,function (res) {
+          //   alert(res.status_text);
+          // })
         }else {
 
           // url="goods_info.html"+"?"+getInfo;
           sessionStorage.setItem('from',url);
           location.href='{path:\'/login\'}'
         }
+      },
+      collection:function () {
+        var info={"user_id":localStorage.getItem('user_id'),"shop_id":this.goods.id,"goods_id":"aaaa"}
+        axios.post(
+          'http://192.168.2.6:8080/api/user/insertcollect/',
+          info).then(function (response) {
+            if(response){
+              console.log(response.data.status_text);
+              alert(response.data.status_text);
+            }
+            // that.goods=that.goods.concat();
+          }
+        ).catch(function (error) {
+            console.log(error)
+          }
+        )
       }
-
     },
-    mounted()
-    {
+
+
+    mounted:function (){
       var that = this;
 
       var getInfo=window.location.href.slice(window.location.href.lastIndexOf("?")+1);

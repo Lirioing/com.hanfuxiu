@@ -3,15 +3,18 @@
   <div>
     <nav-search></nav-search>
     <search-body></search-body>
+
   </div>
 </template>
 
 <script>
   import SearchBody from './SearchBody'
+
 export default {
 name: "Search",
   components:{
-    'search-body':SearchBody
+    'search-body':SearchBody,
+
   }
 }
 </script>
